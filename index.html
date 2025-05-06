@@ -194,33 +194,50 @@
       </header>
     );
 
-    const HomeSection = ({ statusText, statusClass }) => (
-      <section id="home" className="flex flex-col md:flex-row md:items-center md:space-x-12 fade-in">
-        <div className="flex justify-center md:justify-start mb-8 md:mb-0">
-          <img alt="Asad Shabir profile" className="rounded-full w-48 h-48 md:w-56 md:h-56 object-cover shadow-[0_0_20px_#FFD700] profile-img" src="images/profile.jpeg" />
-        </div>
-        <div className="max-w-xl text-white">
-          <h1 className="text-2xl md:text-3xl font-semibold mb-1">Hi, It's <span className="text-[#FFD700]">Asad Shabir</span></h1>
-          <h2 className="text-xl md:text-2xl font-semibold mb-3">I'm <span className={`typing-container ${statusClass}`}>{statusText}</span></h2>
-          <p className="text-sm md:text-base mb-4 text-gray-300">
-            With 3 years of coding experience, I specialize in <span className="text-[#FFD700]">HTML, CSS, JavaScript, React, Next.js, Python, and TypeScript</span>. Let’s create something extraordinary together!
-          </p>
-          <div className="flex space-x-4 mb-6">
-            <a href="#facebook" className="social-icon text-[#FFFFFF] text-lg" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-            <a href="https://www.linkedin.com/in/asad-shabir" className="social-icon text-[#FFFFFF] text-lg" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-            <a href="#github" className="social-icon text-[#FFFFFF] text-lg" aria-label="GitHub"><i className="fab fa-github"></i></a>
+    const HomeSection = ({ statusText, statusClass }) => {
+      const downloadCV = () => {
+        const link = document.createElement("a");
+        link.href = "Asad_CV.pdf", link.target="blank"; 
+        link.download = "Asad_CV.pdf";
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
+      const handleHireMe = () => {
+        window.open("https://www.linkedin.com/in/asad-shabir-programmer110/", "_blank");
+      };
+
+      return (
+        <section id="home" className="flex flex-col md:flex-row md:items-center md:space-x-12 fade-in">
+          <div className="flex justify-center md:justify-start mb-8 md:mb-0">
+            <img alt="Asad Shabir profile" className="rounded-full w-48 h-48 md:w-56 md:h-56 object-cover shadow-[0_0_20px_#FFD700] profile-img" src="images/profile.jpeg" />
           </div>
-          <div className="flex space-x-4">
-            <button className="flex items-center space-x-1 bg-[#FFD700] text-black text-sm px-3 py-1 rounded-full hover:bg-[#D4AF37] transition-colors duration-300">
-              <i className="fas fa-user"></i><span>Hire Me</span>
-            </button>
-            <button className="bg-[#FFD700] text-black text-sm px-3 py-1 rounded-full hover:bg-[#D4AF37] transition-colors duration-300">
-              Download CV
-            </button>
+          <div className="max-w-xl text-white">
+            <h1 className="text-2xl md:text-3xl font-semibold mb-1">Hi, It's <span className="text-[#FFD700]">Asad Shabir</span></h1>
+            <h2 className="text-xl md:text-2xl font-semibold mb-3">I'm <span className={`typing-container ${statusClass}`}>{statusText}</span></h2>
+            <p className="text-sm md:text-base mb-4 text-gray-300">
+              With 3 years of coding experience, I specialize in <span className="text-[#FFD700]">HTML, CSS, JavaScript, React, Next.js, Python, and TypeScript</span>. Let’s create something extraordinary together!
+            </p>
+
+            <div className="flex space-x-4 mb-6">
+              <a href="https://www.facebook.com/Asadalibhatti110" target="_blank" className="social-icon text-[#FFFFFF] text-lg" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+              <a href="https://www.linkedin.com/in/asad-shabir-programmer110/" target="_blank" className="social-icon text-[#FFFFFF] text-lg" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+              <a href="https://github.com/asadshabir" target="_blank" className="social-icon text-[#FFFFFF] text-lg" aria-label="GitHub"><i className="fab fa-github"></i></a>
+            </div>
+            <div className="flex space-x-4">
+              <button onClick={handleHireMe} className="flex items-center space-x-1 bg-[#FFD700] text-black text-sm px-3 py-1 rounded-full hover:bg-[#D4AF37] transition-colors duration-300">
+                <i className="fas fa-user"></i><span>Hire Me</span>
+              </button>
+              <button onClick={downloadCV} className="bg-[#FFD700] text-black text-sm px-3 py-1 rounded-full hover:bg-[#D4AF37] transition-colors duration-300">
+                Download CV
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
-    );
+        </section>
+      );
+    };
 
     const SkillsSection = () => (
       <section id="skills" className="mt-20 max-w-5xl mx-auto fade-in staggered">
@@ -307,19 +324,19 @@
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {[
-            { title: "Admin Dashboard", description: "A Next.js-based admin dashboard with real-time analytics, user management, and responsive design.", src: "images/admindbord.png", link: "#github-project1" },
-            { title: "E-Commerce Platform", description: "A React-based e-commerce platform with cart functionality, payment integration, and product filters.", src: "images/p1.png", link: "#github-project2" },
-            { title: "Social Media App", description: "A Next.js and React-based app with user authentication, post creation, and real-time chat features.", src: "images/p2.png", link: "#github-project3" },
-            { title: "Task Management Tool", description: "A React-based tool for task tracking, team collaboration, and deadline management.", src: "images/p3.png", link: "#github-project4" },
-            { title: "Portfolio Website", description: "A Next.js-based portfolio showcasing dynamic animations and modern design.", src: "images/p4.png", link: "#github-project5" },
-            { title: "Blog Platform", description: "A React-based blog platform with markdown support, categories, and SEO optimization.", src: "images/p5.png", link: "#github-project6" },
+            { title: "Admin Dashboard", description: "A Next.js-based admin dashboard with real-time analytics, user management, and responsive design.", src: "images/admindbord.png", link: "https://github.com/asadshabir/Next.js-And-React-Based-Projects/blob/main/Admin%20Dashboard/index.html"  },
+            { title: "E-Commerce Platform", description: "A React-based e-commerce platform with cart functionality, payment integration, and product filters.", src: "images/p1.png", link: "https://github.com/asadshabir/Next.js-And-React-Based-Projects/blob/main/E-Commerce%20Platform/index.html"  },
+            { title: "Social Media App", description: "A Next.js and React-based app with user authentication, post creation, and real-time chat features.", src: "images/p2.png", link: "https://github.com/asadshabir/Next.js-And-React-Based-Projects/blob/main/Social%20Media%20App/index.html"  },
+            { title: "Task Management Tool", description: "A React-based tool for task tracking, team collaboration, and deadline management.", src: "images/p3.png", link: "https://github.com/asadshabir/Next.js-And-React-Based-Projects/blob/main/Task%20Management%20Tool/index.html"  },
+            { title: "Portfolio Website", description: "A Next.js-based portfolio showcasing dynamic animations and modern design.", src: "images/p4.png", link: "https://github.com/asadshabir/Next.js-And-React-Based-Projects/blob/main/Portfolio%20Website/index.html"  },
+            { title: "Blog Platform", description: "A React-based blog platform with markdown support, categories, and SEO optimization.", src: "images/p5.png", link: "https://github.com/asadshabir/Next.js-And-React-Based-Projects/blob/main/Blog%20Platform/index.html"  },
           ].map(project => (
             <div key={project.title} className="project-card">
-              <img alt={project.title} className="object-cover w-full h-48 rounded-t-md" src={project.src} />
+              <img alt={project.title}  className="object-cover w-full h-48 rounded-t-md" src={project.src} />
               <div className="p-4">
                 <h4 className="text-base font-semibold mb-2">{project.title}</h4>
                 <p className="text-sm text-gray-400 mb-2">{project.description}</p>
-                <a href={project.link} className="text-[#FFD700] hover:text-[#D4AF37] text-sm">View on GitHub</a>
+                <a href={project.link} target="blank" className="text-[#FFD700] hover:text-[#D4AF37] text-sm">View on GitHub</a>
               </div>
             </div>
           ))}
@@ -386,9 +403,9 @@
       <footer className="bg-[#2A3030] text-white text-sm py-6 mt-16 select-none">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex space-x-4">
-            <a href="#facebook" className="social-icon hover:text-[#FFD700]" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-            <a href="https://www.linkedin.com/in/asad-shabir" className="social-icon hover:text-[#FFD700]" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-            <a href="#github" className="social-icon hover:text-[#FFD700]" aria-label="GitHub"><i className="fab fa-github"></i></a>
+            <a href="https://www.facebook.com/Asadalibhatti110" target="_blank" className="social-icon hover:text-[#FFD700]" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+            <a href="https://www.linkedin.com/in/asad-shabir-programmer110/" target="_blank" className="social-icon hover:text-[#FFD700]" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/asadshabir" target="_blank" className="social-icon hover:text-[#FFD700]" aria-label="GitHub"><i className="fab fa-github"></i></a>
           </div>
           <div className="flex space-x-4 text-xs">
             <a className="hover:text-[#FFD700]" href="#">FAQ</a>
