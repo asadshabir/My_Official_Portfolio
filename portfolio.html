@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asad Coder Portfolio</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.9/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0F0F0F;
+      color: #FFFFFF;
+      overflow-x: hidden;
+      position: relative;
+      background: #0F0F0F url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.2" /><stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" /></radialGradient></defs><circle cx="20" cy="20" r="2" fill="url(#grad1)" /><circle cx="80" cy="80" r="2" fill="url(#grad1)" /><line x1="20" y1="20" x2="80" y2="80" style="stroke:#FFD700;stroke-width:0.5;opacity:0.3" /></svg>');
+      background-size: 100px 100px;
+      animation: plexusMove 10s linear infinite;
+    }
+    @keyframes plexusMove {
+      0% { background-position: 0 0; }
+      100% { background-position: -100px -100px; }
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 20%),
+                  radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 20%),
+                  radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+      background-size: 300px 300px;
+      animation: plexusPulse 8s ease infinite;
+      z-index: -1;
+      opacity: 0.5;
+    }
+    @keyframes plexusPulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 0.6; }
+      100% { opacity: 0.4; }
+    }
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #2A3030;
+      border-radius: 8px;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+    }
+    .typing-container {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #FFD700;
+      animation: blink-caret 0.75s step-end infinite;
+      vertical-align: middle;
+    }
+    @keyframes blink-caret {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #FFD700; }
+    }
+    .nav-menu {
+      transition: all 0.3s ease;
+    }
+    .social-icon {
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .social-icon:hover {
+      transform: scale(1.2);
+      color: #FFD700;
+    }
+    @media (max-width: 640px) {
+      .nav-menu { display: none; }
+      .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #2A3030;
+        padding: 1rem;
+        box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
+      }
+      .text-base { font-size: 0.875rem; }
+    }
+    .scroll-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #FFD700;
+      color: #1F2525;
+      padding: 10px;
+      border-radius: 50%;
+      display: none;
+      transition: opacity 0.3s ease;
+    }
+    .scroll-to-top.visible {
+      display: block;
+      opacity: 1;
+    }
+    .skill-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: conic-gradient(#FFD700 0% var(--percent), #2A3030 var(--percent) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 0 auto;
+    }
+    .skill-circle::before {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: #1F2525;
+      border-radius: 50%;
+    }
+    .skill-circle span {
+      position: relative;
+      color: #FFD700;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .skill-icon {
+      font-size: 1.5rem;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .staggered {
+      transition-delay: 0.2s;
+    }
+    .profile-img {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .profile-img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px #FFD700;
+    }
+    .status-color-0 { color: #FFD700; }
+    .status-color-1 { color: #FFFFFF; }
+    .status-color-2 { color: #D4D4D4; }
+    .status-color-3 { color: #FFD700; }
+    .status-color-4 { color: #FFFFFF; }
+  </style>
+</head>
+<body className="selection:bg-[#FFD700] selection:text-black">
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Initialize EmailJS with your User ID
+    (function(){
+      emailjs.init("2xUfyqUh2sWqhLMaX"); // Replace with your EmailJS User ID (e.g., user_xxxxxx)
+    })();
+
+    const Header = ({ toggleMenu, isMenuOpen }) => (
+      <header className="bg-[#2A3030] w-full sticky top-0 z-50 shadow-md">
+        <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+          <div className="text-white font-semibold text-lg select-none cursor-default">
+            Asad <span className="text-[#FFD700]">Coder</span>
+          </div>
+          <div className="md:hidden">
+            <button onClick={toggleMenu} className="text-[#FFD700] focus:outline-none">
+              <i className="fas fa-bars"></i>
+            </button>
+          </div>
+          <ul className={`md:flex space-x-6 text-sm text-white nav-menu ${isMenuOpen ? "active" : ""}`}>
+            <li><a className="border-b-2 border-[#FFD700] pb-0.5 hover:text-[#FFD700]" href="#home">Home</a></li>
+            <li><a className="hover:text-[#FFD700]" href="#skills">Skills</a></li>
+            <li><a className="hover:text-[#FFD700]" href="#services">Services</a></li>
+            <li><a className="hover:text-[#FFD700]" href="#education">Education</a></li>
+            <li><a className="hover:text-[#FFD700]" href="#projects">Projects</a></li>
+            <li><a className="hover:text-[#FFD700]" href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    );
+
+    const HomeSection = ({ statusText, statusClass }) => (
+      <section id="home" className="flex flex-col md:flex-row md:items-center md:space-x-12 fade-in">
+        <div className="flex justify-center md:justify-start mb-8 md:mb-0">
+          <img alt="Asad Shabir profile" className="rounded-full w-48 h-48 md:w-56 md:h-56 object-cover shadow-[0_0_20px_#FFD700] profile-img" src="images/profile.jpeg" />
+        </div>
+        <div className="max-w-xl text-white">
+          <h1 className="text-2xl md:text-3xl font-semibold mb-1">Hi, It's <span className="text-[#FFD700]">Asad Shabir</span></h1>
+          <h2 className="text-xl md:text-2xl font-semibold mb-3">I'm <span className={`typing-container ${statusClass}`}>{statusText}</span></h2>
+          <p className="text-sm md:text-base mb-4 text-gray-300">
+            With 3 years of coding experience, I specialize in <span className="text-[#FFD700]">HTML, CSS, JavaScript, React, Next.js, Python, and TypeScript</span>. Let’s create something extraordinary together!
+          </p>
+          <div className="flex space-x-4 mb-6">
+            <a href="#facebook" className="social-icon text-[#FFFFFF] text-lg" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+            <a href="https://www.linkedin.com/in/asad-shabir" className="social-icon text-[#FFFFFF] text-lg" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+            <a href="#github" className="social-icon text-[#FFFFFF] text-lg" aria-label="GitHub"><i className="fab fa-github"></i></a>
+          </div>
+          <div className="flex space-x-4">
+            <button className="flex items-center space-x-1 bg-[#FFD700] text-black text-sm px-3 py-1 rounded-full hover:bg-[#D4AF37] transition-colors duration-300">
+              <i className="fas fa-user"></i><span>Hire Me</span>
+            </button>
+            <button className="bg-[#FFD700] text-black text-sm px-3 py-1 rounded-full hover:bg-[#D4AF37] transition-colors duration-300">
+              Download CV
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+
+    const SkillsSection = () => (
+      <section id="skills" className="mt-20 max-w-5xl mx-auto fade-in staggered">
+        <h3 className="text-[#FFD700] text-center text-lg font-semibold tracking-wide mb-2 select-none">SKILLS</h3>
+        <div className="w-16 h-0.5 bg-[#FFD700] mx-auto mb-8 relative">
+          <div className="w-6 h-0.5 bg-[#1F2525] absolute left-1/2 -translate-x-1/2 top-0"></div>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
+          {[
+            { name: "HTML", percent: 90, icon: "fas fa-html5" },
+            { name: "CSS", percent: 85, icon: "fas fa-css3-alt" },
+            { name: "JavaScript", percent: 80, icon: "fas fa-js" },
+            { name: "React", percent: 75, icon: "fab fa-react" },
+            { name: "Next.js", percent: 70, icon: "fas fa-code" },
+            { name: "Python", percent: 85, icon: "fab fa-python" },
+            { name: "TypeScript", percent: 70, icon: "fas fa-code" },
+            { name: "LLMs", percent: 65, icon: "fas fa-brain" },
+          ].map(skill => (
+            <div key={skill.name} className="text-center">
+              <div className="skill-circle" style={{ "--percent": `${skill.percent}%` }}><span>{skill.percent}%</span></div>
+              <i className={`${skill.icon} skill-icon text-[#FFD700] mt-2`}></i>
+              <p className="text-sm mt-1">{skill.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+
+    const ServicesSection = () => (
+      <section id="services" className="mt-20 fade-in staggered">
+        <h3 className="text-[#FFD700] text-center text-lg font-semibold tracking-wide mb-2 select-none">SERVICES</h3>
+        <div className="w-16 h-0.5 bg-[#FFD700] mx-auto mb-8 relative">
+          <div className="w-6 h-0.5 bg-[#1F2525] absolute left-1/2 -translate-x-1/2 top-0"></div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {[
+            { icon: "fas fa-laptop", title: "Web Development", description: "Crafting responsive and scalable web applications using modern frameworks." },
+            { icon: "fas fa-code", title: "Software Development", description: "Building robust software solutions tailored to your needs." },
+            { icon: "fas fa-pen", title: "Content Creation", description: "Creating engaging digital content to boost your brand." },
+          ].map(service => (
+            <div key={service.title} className="bg-[#FFD700] text-black p-4 rounded-md flex flex-col justify-between project-card cursor-pointer">
+              <div>
+                <i className={`${service.icon} text-2xl mb-2`}></i>
+                <h4 className="font-semibold text-base mb-2">{service.title}</h4>
+                <p className="text-sm mb-2">{service.description}</p>
+              </div>
+              <div className="text-sm flex items-center space-x-1">
+                <i className="fas fa-circle text-xs"></i><span>Read More</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+
+    const EducationSection = () => (
+      <section id="education" className="mt-20 max-w-5xl mx-auto fade-in staggered">
+        <h3 className="text-[#FFD700] text-center text-lg font-semibold tracking-wide mb-2 select-none">EDUCATION</h3>
+        <div className="w-16 h-0.5 bg-[#FFD700] mx-auto mb-8 relative">
+          <div className="w-6 h-0.5 bg-[#1F2525] absolute left-1/2 -translate-x-1/2 top-0"></div>
+        </div>
+        <div className="relative border-l border-[#FFD700] ml-4 pl-6">
+          <div className="mb-8 relative">
+            <div className="absolute -left-5 top-0 w-8 h-8 rounded-full bg-[#FFD700] flex items-center justify-center text-black text-sm font-semibold select-none">1</div>
+            <div className="border border-[#FFD700] rounded-md p-3 text-sm">
+              <strong className="block mb-1">University</strong>GIAIC 2022-2025
+            </div>
+          </div>
+          <div className="mb-8 relative">
+            <div className="absolute -left-5 top-0 w-8 h-8 rounded-full bg-[#FFD700] flex items-center justify-center text-black text-sm font-semibold select-none">2</div>
+            <div className="border border-[#FFD700] rounded-md p-3 text-sm">
+              <strong className="block mb-1">Program</strong>Governor Initiative for Artificial Intelligence, Web 3.0 and Metaverse.
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+
+    const ProjectsSection = () => (
+      <section id="projects" className="mt-20 max-w-5xl mx-auto fade-in staggered">
+        <h3 className="text-[#FFD700] text-center text-lg font-semibold tracking-wide mb-2 select-none">PROJECTS</h3>
+        <div className="w-16 h-0.5 bg-[#FFD700] mx-auto mb-8 relative">
+          <div className="w-6 h-0.5 bg-[#1F2525] absolute left-1/2 -translate-x-1/2 top-0"></div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {[
+            { title: "Admin Dashboard", description: "A Next.js-based admin dashboard with real-time analytics, user management, and responsive design.", src: "images/admindbord.png", link: "#github-project1" },
+            { title: "E-Commerce Platform", description: "A React-based e-commerce platform with cart functionality, payment integration, and product filters.", src: "images/p1.png", link: "#github-project2" },
+            { title: "Social Media App", description: "A Next.js and React-based app with user authentication, post creation, and real-time chat features.", src: "images/p2.png", link: "#github-project3" },
+            { title: "Task Management Tool", description: "A React-based tool for task tracking, team collaboration, and deadline management.", src: "images/p3.png", link: "#github-project4" },
+            { title: "Portfolio Website", description: "A Next.js-based portfolio showcasing dynamic animations and modern design.", src: "images/p4.png", link: "#github-project5" },
+            { title: "Blog Platform", description: "A React-based blog platform with markdown support, categories, and SEO optimization.", src: "images/p5.png", link: "#github-project6" },
+          ].map(project => (
+            <div key={project.title} className="project-card">
+              <img alt={project.title} className="object-cover w-full h-48 rounded-t-md" src={project.src} />
+              <div className="p-4">
+                <h4 className="text-base font-semibold mb-2">{project.title}</h4>
+                <p className="text-sm text-gray-400 mb-2">{project.description}</p>
+                <a href={project.link} className="text-[#FFD700] hover:text-[#D4AF37] text-sm">View on GitHub</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+
+    const ContactSection = () => {
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const formData = {
+          name: e.target.name.value,
+          email: e.target.email.value,
+          phone: e.target.phone.value,
+          message: e.target.message.value,
+        };
+
+        emailjs.send(
+          "service_42sqc8n", // Replace with your EmailJS Service ID (e.g., service_xxxxxx)
+          "template_qhfsv66", // Replace with your EmailJS Template ID (e.g., template_xxxxxx)
+          formData
+        )
+        .then((response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          alert("Message sent successfully! I'll get back to you soon.");
+          e.target.reset();
+        }, (error) => {
+          console.log("FAILED...", error);
+          alert("Failed to send message. Please try again later.");
+        });
+      };
+
+      return (
+        <section id="contact" className="mt-20 max-w-md mx-auto fade-in staggered">
+          <h3 className="text-[#FFD700] text-center text-lg font-semibold tracking-wide mb-2 select-none">CONTACT</h3>
+          <div className="w-16 h-0.5 bg-[#FFD700] mx-auto mb-8 relative">
+            <div className="w-6 h-0.5 bg-[#1F2525] absolute left-1/2 -translate-x-1/2 top-0"></div>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-3 text-sm text-[#FFFFFF]">
+            <div>
+              <label htmlFor="name" className="block mb-1">Name</label>
+              <input id="name" name="name" className="w-full bg-[#2A3030] border border-[#FFD700] rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[#FFD700]" placeholder="Name" type="text" required />
+            </div>
+            <div>
+              <label htmlFor="email" className="block mb-1">Email</label>
+              <input id="email" name="email" className="w-full bg-[#2A3030] border border-[#FFD700] rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[#FFD700]" placeholder="Email" type="email" required />
+            </div>
+            <div>
+              <label htmlFor="phone" className="block mb-1">Phone Number</label>
+              <input id="phone" name="phone" className="w-full bg-[#2A3030] border border-[#FFD700] rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[#FFD700]" placeholder="Phone Number" type="tel" />
+            </div>
+            <div>
+              <label htmlFor="message" className="block mb-1">Your Message</label>
+              <textarea id="message" name="message" className="w-full bg-[#2A3030] border border-[#FFD700] rounded px-2 py-1 resize-none focus:outline-none focus:ring-1 focus:ring-[#FFD700]" placeholder="Your Message" rows="5"></textarea>
+            </div>
+            <button className="w-full bg-[#FFD700] text-black text-sm py-2 rounded hover:bg-[#D4AF37] transition-colors duration-300" type="submit">Submit</button>
+          </form>
+        </section>
+      );
+    };
+
+    const Footer = () => (
+      <footer className="bg-[#2A3030] text-white text-sm py-6 mt-16 select-none">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex space-x-4">
+            <a href="#facebook" className="social-icon hover:text-[#FFD700]" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+            <a href="https://www.linkedin.com/in/asad-shabir" className="social-icon hover:text-[#FFD700]" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+            <a href="#github" className="social-icon hover:text-[#FFD700]" aria-label="GitHub"><i className="fab fa-github"></i></a>
+          </div>
+          <div className="flex space-x-4 text-xs">
+            <a className="hover:text-[#FFD700]" href="#">FAQ</a>
+            <a className="hover:text-[#FFD700]" href="#">Services</a>
+            <a className="hover:text-[#FFD700]" href="#">About</a>
+            <a className="hover:text-[#FFD700]" href="#">Contact</a>
+            <a className="hover:text-[#FFD700]" href="#">Privacy Policy</a>
+          </div>
+        </div>
+        <p className="text-center mt-4 text-xs">Thank you for visiting! © 2025 Asad Coder. All Rights Reserved</p>
+      </footer>
+    );
+
+    const ScrollToTop = ({ isVisible }) => (
+      <button
+        className={`scroll-to-top ${isVisible ? "visible" : ""}`}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <i className="fas fa-arrow-up"></i>
+      </button>
+    );
+
+    const App = () => {
+      const [isMenuOpen, setIsMenuOpen] = useState(false);
+      const [isScrollTopVisible, setIsScrollTopVisible] = useState(false);
+      const [statusText, setStatusText] = useState("");
+      const [statusClass, setStatusClass] = useState("");
+
+      const statuses = ["a Software Developer", "a Programmer", "an Engineer", "a Creative Coder", "a Problem Solver"];
+      const typingSpeed = 100;
+      const erasingSpeed = 50;
+      const delayBetween = 1500;
+
+      useEffect(() => {
+        let statusIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        const type = () => {
+          const currentStatus = statuses[statusIndex];
+          if (!isDeleting) {
+            setStatusText(currentStatus.substring(0, charIndex + 1));
+            setStatusClass(`status-color-${statusIndex}`);
+            charIndex++;
+            if (charIndex === currentStatus.length) {
+              isDeleting = true;
+              setTimeout(type, delayBetween);
+            } else {
+              setTimeout(type, typingSpeed);
+            }
+          } else {
+            setStatusText(currentStatus.substring(0, charIndex - 1));
+            charIndex--;
+            if (charIndex === 0) {
+              isDeleting = false;
+              statusIndex = (statusIndex + 1) % statuses.length;
+              setTimeout(type, typingSpeed);
+            } else {
+              setTimeout(type, erasingSpeed);
+            }
+          }
+        };
+
+        type();
+
+        const handleScroll = () => {
+          setIsScrollTopVisible(window.scrollY > 300);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        const sections = document.querySelectorAll(".fade-in");
+        let delay = 0;
+        sections.forEach(section => {
+          setTimeout(() => {
+            section.classList.add("active");
+          }, delay);
+          delay += 200;
+        });
+
+        return () => window.removeEventListener("scroll", handleScroll);
+      }, []);
+
+      const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+      return (
+        <>
+          <Header toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
+          <main className="max-w-7xl mx-auto px-4 py-12">
+            <HomeSection statusText={statusText} statusClass={statusClass} />
+            <SkillsSection />
+            <ServicesSection />
+            <EducationSection />
+            <ProjectsSection />
+            <ContactSection />
+          </main>
+          <Footer />
+          <ScrollToTop isVisible={isScrollTopVisible} />
+        </>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+</html>
